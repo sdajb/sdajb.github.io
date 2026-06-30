@@ -7,7 +7,1071 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jinwoo Bae — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  :root{
+    --bg:#f3ede2;
+    --surface:#faf6ee;
+    --surface-alt:#ece4d3;
+    --border:#ddd1b6;
+    --border-soft:#e7ddc8;
+    --text-primary:#2e2a24;
+    --text-secondary:#7a7565;
+    --text-faint:#a99f88;
+    --sage:#7c8a6f;
+    --sage-dark:#4f5b44;
+    --sage-light:#eef1e7;
+    --sage-line:#9aa68b;
+
+    --clay:#b97a52;
+    --clay-dark:#7a4d2e;
+    --clay-light:#f5e9dd;
+    --clay-line:#cf9b6f;
+
+    --font-display:'Fraunces', serif;
+    --font-body:'Inter', -apple-system, sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+
+    --max-w:880px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; font-size:17px;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text-primary);
+    font-family:var(--font-body);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  a{color:inherit; text-decoration:none;}
+  a:focus-visible, button:focus-visible, .btn:focus-visible{
+    outline:2px solid var(--sage-dark);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  /* ---------- proximity-reactive text ---------- */
+  .magnetic{
+    transition:color 0.18s ease;
+  }
+
+  @keyframes underline-draw{
+    0%{transform:scaleX(0); opacity:0;}
+    30%{transform:scaleX(1); opacity:0.9;}
+    72%{transform:scaleX(1); opacity:0.9;}
+    100%{transform:scaleX(1); opacity:0;}
+  }
+  .flash-highlight{
+    display:inline-block;
+    position:relative;
+  }
+  .flash-highlight::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:-8px;
+    height:1.5px;
+    background:var(--sage-line);
+    transform-origin:left;
+    transform:scaleX(0);
+    opacity:0;
+    animation:underline-draw 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .flash-highlight::after{animation:none; opacity:0;}
+  }
+
+  .wrap{max-width:var(--max-w); margin:0 auto; padding:0 28px; position:relative; z-index:2;}
+
+  /* ---------- nav ---------- */
+  header.site-nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(243,237,226,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .nav-inner{
+    max-width:var(--max-w); margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-name{
+    font-family:var(--font-display);
+    font-weight:500; font-size:18px;
+    letter-spacing:0.01em;
+    transition:color 0.15s ease;
+  }
+  .nav-name:hover{color:var(--sage-dark);}
+  .nav-links{
+    display:flex; gap:24px; list-style:none; margin:0; padding:0;
+    font-family:var(--font-mono); font-size:13.5px; letter-spacing:0.02em;
+    color:var(--text-secondary);
+  }
+  .nav-links a:hover{color:var(--sage-dark);}
+
+  .lang-toggle{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    letter-spacing:0.03em;
+    padding:6px 12px;
+    border-radius:6px;
+    border:1px solid var(--border);
+    background:transparent;
+    color:var(--text-secondary);
+    cursor:pointer;
+    transition:border-color 0.15s ease, color 0.15s ease;
+  }
+  .lang-toggle:hover{border-color:var(--sage-line); color:var(--sage-dark);}
+  .lang-toggle b{color:var(--sage-dark); font-weight:500;}
+
+  @media (max-width:640px){
+    .nav-links{display:none;}
+  }
+
+  /* ---------- eyebrow / signature ---------- */
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    letter-spacing:0.04em;
+    color:var(--sage-dark);
+    margin:0 0 14px;
+  }
+  .eyebrow::before{content:"[ ";}
+  .eyebrow::after{content:" ]";}
+
+  .waveform{
+    display:block;
+    width:100%;
+    max-width:340px;
+    height:auto;
+    margin:28px 0 8px;
+  }
+  .waveform path{
+    fill:none;
+    stroke:var(--sage-line);
+    stroke-width:1.6;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:72px 0 56px;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .hero-grid{
+    display:flex;
+    align-items:center;
+    gap:40px;
+  }
+  .hero-text{flex:1; min-width:0;}
+  .hero-title{
+    font-family:var(--font-display);
+    font-weight:500;
+    font-size:clamp(32px, 4.8vw, 46px);
+    line-height:1.25;
+    margin:0;
+    max-width:520px;
+  }
+  .hero-sub{
+    font-size:17px;
+    color:var(--text-secondary);
+    margin:14px 0 0;
+  }
+  .hero-actions{
+    display:flex; gap:12px; margin-top:28px; flex-wrap:wrap;
+  }
+  .btn{
+    display:inline-block;
+    font-family:var(--font-mono);
+    font-size:13.5px;
+    letter-spacing:0.02em;
+    padding:11px 20px;
+    border-radius:6px;
+    border:1px solid var(--border);
+    color:var(--text-primary);
+    background:transparent;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .btn:hover{border-color:var(--sage-line);}
+  .btn-primary{
+    background:var(--sage);
+    border-color:var(--sage);
+    color:var(--surface);
+  }
+  .btn-primary:hover{background:var(--sage-dark); border-color:var(--sage-dark);}
+
+  .hero-photo{
+    flex-shrink:0;
+    width:148px; height:148px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:var(--surface-alt);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .hero-photo img{width:100%; height:100%; object-fit:cover; display:block;}
+  .photo-placeholder{
+    color:var(--text-faint);
+    font-family:var(--font-mono);
+    font-size:10px;
+    text-align:center;
+    line-height:1.6;
+  }
+  .photo-placeholder svg{display:block; margin:0 auto 6px;}
+
+  @media (max-width:640px){
+    .hero{padding:48px 0 40px;}
+    .hero-grid{flex-direction:column-reverse; align-items:flex-start; gap:24px;}
+    .hero-photo{width:100px; height:100px;}
+  }
+
+  /* ---------- sections (shared) ---------- */
+  section{
+    padding:56px 0;
+    border-bottom:1px solid var(--border-soft);
+    scroll-margin-top:84px;
+  }
+  section:last-of-type{border-bottom:none;}
+  .section-title{
+    font-family:var(--font-display);
+    font-weight:500;
+    font-size:25px;
+    margin:0 0 18px;
+  }
+
+  /* ---------- about ---------- */
+  .about-body{
+    max-width:620px;
+    color:var(--text-secondary);
+    font-size:17px;
+  }
+  .about-body p{margin:0 0 16px;}
+  .about-body p:last-child{margin-bottom:0;}
+  .about-body strong{color:var(--text-primary); font-weight:600;}
+
+  /* ---------- skills ---------- */
+  .skills-row{
+    display:flex; flex-wrap:wrap; gap:8px;
+    max-width:640px;
+  }
+  .chip{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    padding:6px 12px;
+    border-radius:5px;
+    white-space:nowrap;
+  }
+  .chip.core{
+    color:var(--sage-dark);
+    background:var(--sage-light);
+    border:1px solid var(--sage-line);
+  }
+  .chip.support{
+    color:var(--clay-dark);
+    background:var(--clay-light);
+    border:1px solid var(--clay-line);
+  }
+  .skills-note{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--text-faint);
+    margin-top:12px;
+  }
+
+  /* ---------- projects ---------- */
+  .project-main{
+    display:flex;
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--surface);
+    margin-bottom:16px;
+    cursor:pointer;
+    transition:border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .project-main:hover, .project-main:focus-visible{
+    border-color:var(--sage-line);
+    box-shadow:0 0 0 1px var(--sage-line);
+  }
+  .project-media{
+    flex-shrink:0;
+    width:220px;
+    background:var(--surface-alt);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .project-media img{width:100%; height:100%; object-fit:cover; display:block;}
+  .project-body{padding:24px 26px;}
+  .project-status{
+    display:inline-block;
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:var(--sage-dark);
+    background:var(--sage-light);
+    border:1px solid var(--sage-line);
+    padding:3px 9px;
+    border-radius:4px;
+    margin-bottom:10px;
+  }
+  .project-title{
+    font-family:var(--font-display);
+    font-weight:500;
+    font-size:19px;
+    margin:0 0 8px;
+  }
+  .project-desc{
+    font-size:15.5px;
+    color:var(--text-secondary);
+    margin:0 0 10px;
+    max-width:480px;
+  }
+  .project-result{
+    font-size:14.5px;
+    color:var(--text-secondary);
+    border-left:2px solid var(--sage-line);
+    padding-left:10px;
+    margin:0 0 14px;
+  }
+  .view-more{
+    display:inline-flex; align-items:center; gap:4px;
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--sage-dark);
+  }
+
+  @media (max-width:640px){
+    .project-main{flex-direction:column;}
+    .project-media{width:100%; height:160px;}
+  }
+
+  .project-secondary{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  @media (max-width:640px){
+    .project-secondary{grid-template-columns:1fr;}
+  }
+  .project-card{
+    border:1px solid var(--border-soft);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--surface);
+    cursor:pointer;
+    transition:border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .project-card:hover, .project-card:focus-visible{
+    border-color:var(--sage-line);
+    box-shadow:0 0 0 1px var(--sage-line);
+  }
+  .project-card-media{
+    height:120px;
+    background:var(--surface-alt);
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .project-card-media img{width:100%; height:100%; object-fit:cover; display:block;}
+  .card-status{
+    position:absolute; top:8px; left:8px;
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    color:var(--sage-dark);
+    background:var(--sage-light);
+    border:1px solid var(--sage-line);
+    padding:2px 7px;
+    border-radius:4px;
+  }
+  .project-card-body{padding:14px 16px;}
+  .project-card-title{
+    font-size:15.5px;
+    font-weight:500;
+    margin:0 0 4px;
+  }
+  .project-card-desc{
+    font-size:13.5px;
+    color:var(--text-secondary);
+    margin:0 0 8px;
+  }
+
+  /* ---------- experience ---------- */
+  .timeline{
+    position:relative;
+    padding-left:22px;
+    max-width:600px;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:5px; top:6px; bottom:6px;
+    width:1px;
+    background:var(--border);
+  }
+  .t-item{
+    position:relative;
+    margin-bottom:22px;
+  }
+  .t-item:last-child{margin-bottom:0;}
+  .t-item::before{
+    content:"";
+    position:absolute;
+    left:-22px; top:5px;
+    width:9px; height:9px;
+    border-radius:50%;
+    background:var(--border);
+  }
+  .t-item.current::before{background:var(--sage);}
+  .t-date{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--text-faint);
+    margin-bottom:2px;
+  }
+  .t-role{
+    font-size:16px;
+    font-weight:500;
+    color:var(--text-primary);
+  }
+  .t-org{
+    font-size:14.5px;
+    color:var(--text-secondary);
+  }
+
+  /* ---------- contact ---------- */
+  .contact-row{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    flex-wrap:wrap; gap:16px;
+  }
+  .contact-links{
+    display:flex; flex-direction:column; gap:6px;
+    font-size:16px;
+  }
+  .contact-links a{color:var(--sage-dark);}
+  .contact-links a:hover{text-decoration:underline;}
+  .contact-meta{color:var(--text-secondary); font-size:14.5px;}
+  .logo-media{
+    background:var(--surface-alt);
+    padding:18px;
+  }
+  .logo-media img{object-fit:contain !important;}
+  .availability{
+    font-family:var(--font-mono);
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--sage-dark);
+    background:var(--sage-light);
+    border:1px solid var(--sage-line);
+    padding:10px 16px;
+    border-radius:6px;
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+  }
+  .availability::before{
+    content:"";
+    width:7px; height:7px;
+    border-radius:50%;
+    background:var(--sage);
+    flex-shrink:0;
+  }
+
+  footer{
+    padding:28px;
+    text-align:center;
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:var(--text-faint);
+    position:relative; z-index:2;
+  }
+
+  /* ---------- project detail modal ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; z-index:100;
+    background:rgba(46,42,36,0);
+    padding:24px;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition:background 0.32s ease, opacity 0.32s ease, visibility 0s linear 0.32s;
+  }
+  .modal-overlay.open{
+    background:rgba(46,42,36,0.45);
+    opacity:1; visibility:visible; pointer-events:auto;
+    transition:background 0.32s ease, opacity 0.32s ease, visibility 0s linear 0s;
+  }
+  .modal-card{
+    background:var(--surface);
+    border-radius:14px;
+    max-width:560px;
+    width:100%;
+    max-height:85vh;
+    overflow-y:auto;
+    border:1px solid var(--border);
+    transform:scale(0.9) translateY(18px);
+    opacity:0;
+    transition:transform 0.42s cubic-bezier(0.32, 1.5, 0.45, 1), opacity 0.28s ease;
+  }
+  .modal-overlay.open .modal-card{
+    transform:scale(1) translateY(0);
+    opacity:1;
+    transition:transform 0.46s cubic-bezier(0.32, 1.5, 0.45, 1), opacity 0.3s ease;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .modal-card{transition:opacity 0.2s ease; transform:none;}
+    .modal-overlay.open .modal-card{transform:none;}
+  }
+  .modal-media{
+    width:100%; height:220px;
+    background:var(--surface-alt);
+  }
+  .modal-media img{width:100%; height:100%; object-fit:cover; display:block;}
+  .modal-media.logo-media{display:flex; align-items:center; justify-content:center; height:160px;}
+  .modal-body{padding:26px 28px 28px;}
+  .modal-close{
+    position:sticky; top:14px; float:right; margin-right:14px;
+    width:32px; height:32px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text-secondary);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    font-size:16px;
+    z-index:2;
+  }
+  .modal-close:hover{border-color:var(--sage-line); color:var(--sage-dark);}
+  .modal-title{
+    font-family:var(--font-display);
+    font-weight:500;
+    font-size:21px;
+    margin:0 0 12px;
+  }
+  .modal-text p{
+    font-size:15.5px;
+    color:var(--text-secondary);
+    margin:0 0 14px;
+  }
+  .modal-text p:last-child{margin-bottom:0;}
+
+  /* ---------- certifications ---------- */
+  .cert-list{
+    display:flex; flex-direction:column;
+    max-width:620px;
+    border-top:1px solid var(--border-soft);
+  }
+  .cert-item{
+    display:flex; justify-content:space-between; align-items:center;
+    gap:16px;
+    padding:16px 0;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .cert-name{
+    font-size:15.5px;
+    font-weight:500;
+    color:var(--text-primary);
+    margin:0 0 3px;
+  }
+  .cert-issuer{
+    font-size:13.5px;
+    color:var(--text-secondary);
+    margin:0;
+  }
+  .cert-status{
+    flex-shrink:0;
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.02em;
+    color:var(--text-secondary);
+    border:1px solid var(--border);
+    padding:4px 10px;
+    border-radius:4px;
+    white-space:nowrap;
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a href="#contact" class="nav-name">Jinwoo Bae</a>
+    <ul class="nav-links">
+      <li><a href="#about" data-i18n="navAbout">about</a></li>
+      <li><a href="#skills" data-i18n="navSkills">skills</a></li>
+      <li><a href="#certifications" data-i18n="navCerts">certifications</a></li>
+      <li><a href="#projects" data-i18n="navProjects">projects</a></li>
+      <li><a href="#experience" data-i18n="navExperience">experience</a></li>
+      <li><a href="#contact" data-i18n="navContact">contact</a></li>
+    </ul>
+    <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language"><b id="langEnLabel">EN</b> / <span id="langKoLabel">KO</span></button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <p class="eyebrow">sdajb.github.io</p>
+        <h1 class="hero-title" data-i18n="heroTitle">Understanding systems. Validating them. Making them better.</h1>
+
+        <!-- signature waveform: stylised 1-Wire / digital signal trace -->
+        <svg class="waveform" viewBox="0 0 340 36" role="img" aria-label="Stylised digital signal waveform">
+          <path d="M0 28 H30 V8 H70 V28 H110 V8 H120 V28 H160 V8 H230 V28 H260 V8 H270 V28 H340" />
+        </svg>
+
+        <p class="hero-sub" data-i18n="heroSub">Electronics &amp; Electrical Engineering, University of Edinburgh</p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects" data-i18n="btnProjects">View projects</a>
+          <a class="btn" href="#contact" data-i18n="btnContact">Contact</a>
+        </div>
+      </div>
+
+      <div class="hero-photo">
+        <img src="images/profile.jpg" alt="Jinwoo Bae">
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="eyebrow" data-i18n="eyebrowAbout">about</p>
+    <h2 class="section-title" data-i18n="aboutTitle">A short introduction</h2>
+    <div class="about-body">
+      <p data-i18n="aboutP1">I'm a final-year Electronics and Electrical Engineering student at the University of Edinburgh, with hands-on experience in embedded systems, low-level communication protocols, and structured problem-solving.</p>
+      <p data-i18n="aboutP2">My final year project — a <strong>1-Wire / I2C communication bridge</strong> for wearable inertial sensing — took me from protocol analysis through firmware development to signal-level validation. Outside the lab, I've worked across process automation, technical content development, and live event operations, learning how to translate technical thinking into clear, working systems for the people who rely on them.</p>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="eyebrow" data-i18n="eyebrowSkills">skills</p>
+    <h2 class="section-title" data-i18n="skillsTitle">What I work with</h2>
+    <div class="skills-row">
+      <span class="chip core">1-Wire / I2C</span>
+      <span class="chip core" data-i18n="skillMicro">Microcontrollers</span>
+      <span class="chip core">C / Python</span>
+      <span class="chip core" data-i18n="skillFirmware">Firmware development</span>
+      <span class="chip core" data-i18n="skillDebug">Protocol-level debugging</span>
+      <span class="chip support" data-i18n="skillValidation">System validation</span>
+      <span class="chip support" data-i18n="skillAutomation">Process automation</span>
+      <span class="chip support" data-i18n="skillWorkflow">Workflow design</span>
+      <span class="chip support" data-i18n="skillDocs">Documentation &amp; reporting</span>
+      <span class="chip support" data-i18n="skillComms">Stakeholder communication</span>
+    </div>
+    <p class="skills-note" data-i18n="skillsNote">ordered: technical → validation &amp; process → communication</p>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <p class="eyebrow" data-i18n="eyebrowCerts">certifications</p>
+    <h2 class="section-title" data-i18n="certsTitle">Currently building</h2>
+    <div class="cert-list">
+      <div class="cert-item">
+        <div class="cert-info">
+          <p class="cert-name">Career Essentials in Generative AI</p>
+          <p class="cert-issuer">Microsoft &amp; LinkedIn</p>
+        </div>
+        <span class="cert-status" data-i18n="certStatus">In progress</span>
+      </div>
+      <div class="cert-item">
+        <div class="cert-info">
+          <p class="cert-name">OCI AI Foundations Associate</p>
+          <p class="cert-issuer">Oracle</p>
+        </div>
+        <span class="cert-status" data-i18n="certStatus">In progress</span>
+      </div>
+      <div class="cert-item">
+        <div class="cert-info">
+          <p class="cert-name">Lean Six Sigma Yellow Belt</p>
+          <p class="cert-issuer" data-i18n="certSixSigmaIssuer">Process improvement</p>
+        </div>
+        <span class="cert-status" data-i18n="certStatus">In progress</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="eyebrow" data-i18n="eyebrowProjects">projects</p>
+    <h2 class="section-title" data-i18n="projectsTitle">What I've built</h2>
+
+    <div class="project-main" data-project="main" tabindex="0" role="button" aria-haspopup="dialog">
+      <div class="project-media">
+        <img src="images/project-scope.jpg" alt="Oscilloscope capture of the 1-Wire / I2C signal during testing">
+      </div>
+      <div class="project-body">
+        <span class="project-status" data-i18n="projectStatus">Completed</span>
+        <h3 class="project-title" data-i18n="projectTitle">Final year project — Embedded communication bridge</h3>
+        <p class="project-desc" data-i18n="projectDesc">Designed and implemented a 1-Wire / I2C communication bridge for wearable inertial sensing, from protocol analysis through firmware development to signal-level validation across multiple sensor pairs.</p>
+        <p class="project-result" data-i18n="projectResult">Validated communication reliability across sensor pairs, including timing analysis, ROM ID handling, and noise comparison against an I2C baseline.</p>
+        <span class="view-more" data-i18n="viewMore">View details →</span>
+      </div>
+    </div>
+
+    <div class="project-secondary">
+      <div class="project-card" data-project="eduquest" tabindex="0" role="button" aria-haspopup="dialog">
+        <div class="project-card-media logo-media">
+          <span class="card-status" data-i18n="projectStatus">Completed</span>
+          <img src="images/eduquest-logo.png" alt="Eduquest logo">
+        </div>
+        <div class="project-card-body">
+          <p class="project-card-title">AI R&amp;D — Eduquest</p>
+          <p class="project-card-desc" data-i18n="cardEduquest">Structured technical learning content and automated workflows for AI-assisted educational programs.</p>
+          <span class="view-more" data-i18n="viewMore">View details →</span>
+        </div>
+      </div>
+      <div class="project-card" data-project="fringe" tabindex="0" role="button" aria-haspopup="dialog">
+        <div class="project-card-media">
+          <span class="card-status" data-i18n="projectStatus">Completed</span>
+          <img src="images/fringe-ari.jpg" alt="ARI: The Spirit of Korea poster, Edinburgh Fringe Festival">
+        </div>
+        <div class="project-card-body">
+          <p class="project-card-title" data-i18n="cardFringeTitle">Edinburgh Fringe Festival</p>
+          <p class="project-card-desc" data-i18n="cardFringe">Stage electronics and on-site technical operations for large-scale live events.</p>
+          <span class="view-more" data-i18n="viewMore">View details →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="eyebrow" data-i18n="eyebrowExperience">experience</p>
+    <h2 class="section-title" data-i18n="experienceTitle">Timeline</h2>
+    <div class="timeline">
+      <div class="t-item current">
+        <p class="t-date" data-i18n="t1date">Aug 2025 — completed</p>
+        <p class="t-role" data-i18n="t1role">Final year project — Embedded Communication Systems</p>
+        <p class="t-org">The University of Edinburgh</p>
+      </div>
+      <div class="t-item">
+        <p class="t-date">Aug 2024</p>
+        <p class="t-role" data-i18n="t2role">Project Worker</p>
+        <p class="t-org" data-i18n="t2org">Edinburgh Fringe Festival — Korean Season</p>
+      </div>
+      <div class="t-item">
+        <p class="t-date" data-i18n="t3date">May — Jun 2024</p>
+        <p class="t-role" data-i18n="t3role">AI R&amp;D and Marketing Content Development</p>
+        <p class="t-org">Eduquest, Seoul</p>
+      </div>
+      <div class="t-item">
+        <p class="t-date" data-i18n="t4date">Dec 2021 — Dec 2022</p>
+        <p class="t-role" data-i18n="t4role">Restaurant Manager</p>
+        <p class="t-org">Kim's Bulgogi, Edinburgh</p>
+      </div>
+      <div class="t-item">
+        <p class="t-date" data-i18n="t5date">Oct 2021 — Feb 2023</p>
+        <p class="t-role" data-i18n="t5role">English &amp; Maths Tuition Teacher</p>
+        <p class="t-org" data-i18n="t5org">Freelance</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="eyebrow" data-i18n="eyebrowContact">contact</p>
+    <h2 class="section-title" data-i18n="contactTitle">Get in touch</h2>
+    <div class="contact-row">
+      <div class="contact-links">
+        <a href="mailto:zeennnu@gmail.com">zeennnu@gmail.com</a>
+        <a href="tel:+447551406694">+44 7551 406694</a>
+        <span class="contact-meta" data-i18n="location">London, England, UK</span>
+      </div>
+      <div class="availability" data-i18n="availability">available to work from September 2026</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>jinwoo bae · built 2026</footer>
+
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-card">
+    <button class="modal-close" id="modalClose" type="button" aria-label="Close">✕</button>
+    <div class="modal-media" id="modalMedia"></div>
+    <div class="modal-body">
+      <span class="project-status" id="modalStatus"></span>
+      <h3 class="modal-title" id="modalTitle"></h3>
+      <div class="modal-text" id="modalText"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var translations = {
+    en: {
+      navAbout: "about", navSkills: "skills", navCerts: "certifications", navProjects: "projects", navExperience: "experience", navContact: "contact",
+      heroTitle: "Understanding systems. Validating them. Making them better.",
+      heroSub: "Electronics &amp; Electrical Engineering, University of Edinburgh",
+      btnProjects: "View projects", btnContact: "Contact",
+      eyebrowAbout: "about", aboutTitle: "A short introduction",
+      aboutP1: "I'm a final-year Electronics and Electrical Engineering student at the University of Edinburgh, with hands-on experience in embedded systems, low-level communication protocols, and structured problem-solving.",
+      aboutP2: "My final year project — a <strong>1-Wire / I2C communication bridge</strong> for wearable inertial sensing — took me from protocol analysis through firmware development to signal-level validation. Outside the lab, I've worked across process automation, technical content development, and live event operations, learning how to translate technical thinking into clear, working systems for the people who rely on them.",
+      eyebrowSkills: "skills", skillsTitle: "What I work with",
+      skillMicro: "Microcontrollers", skillFirmware: "Firmware development", skillDebug: "Protocol-level debugging",
+      skillValidation: "System validation", skillAutomation: "Process automation", skillWorkflow: "Workflow design",
+      skillDocs: "Documentation &amp; reporting", skillComms: "Stakeholder communication",
+      skillsNote: "ordered: technical → validation &amp; process → communication",
+      eyebrowCerts: "certifications", certsTitle: "Currently building",
+      certStatus: "In progress",
+      certSixSigmaIssuer: "Process improvement",
+      eyebrowProjects: "projects", projectsTitle: "What I've built",
+      projectStatus: "Completed",
+      projectTitle: "Final year project — Embedded communication bridge",
+      projectDesc: "Designed and implemented a 1-Wire / I2C communication bridge for wearable inertial sensing, from protocol analysis through firmware development to signal-level validation across multiple sensor pairs.",
+      projectResult: "Validated communication reliability across sensor pairs, including timing analysis, ROM ID handling, and noise comparison against an I2C baseline.",
+      cardEduquest: "Structured technical learning content and automated workflows for AI-assisted educational programs.",
+      cardFringeTitle: "Edinburgh Fringe Festival",
+      cardFringe: "Stage electronics and on-site technical operations for large-scale live events.",
+      viewMore: "View details →",
+      eyebrowExperience: "experience", experienceTitle: "Timeline",
+      t1date: "Aug 2025 — completed", t1role: "Final year project — Embedded Communication Systems",
+      t2role: "Project Worker", t2org: "Edinburgh Fringe Festival — Korean Season",
+      t3date: "May — Jun 2024", t3role: "AI R&amp;D and Marketing Content Development",
+      t4date: "Dec 2021 — Dec 2022", t4role: "Restaurant Manager",
+      t5date: "Oct 2021 — Feb 2023", t5role: "English &amp; Maths Tuition Teacher", t5org: "Freelance",
+      eyebrowContact: "contact", contactTitle: "Get in touch",
+      location: "London, England, UK",
+      availability: "available to work from September 2026"
+    },
+    ko: {
+      navAbout: "소개", navSkills: "기술", navCerts: "자격증", navProjects: "프로젝트", navExperience: "경력", navContact: "연락처",
+      heroTitle: "시스템을 이해하고, 검증하고, 개선합니다.",
+      heroSub: "전기전자공학 전공, 에든버러 대학교",
+      btnProjects: "프로젝트 보기", btnContact: "연락하기",
+      eyebrowAbout: "소개", aboutTitle: "짧은 소개",
+      aboutP1: "에든버러 대학교 전기전자공학과 졸업반으로, 임베디드 시스템과 저수준 통신 프로토콜, 구조화된 문제 해결에 실무 경험을 갖추고 있습니다.",
+      aboutP2: "졸업 프로젝트는 웨어러블 관성 센싱을 위한 <strong>1-Wire / I2C 통신 브릿지</strong>로, 프로토콜 분석부터 펌웨어 개발, 신호 레벨 검증까지 전 과정을 직접 진행했습니다. 실험실 밖에서는 프로세스 자동화, 기술 콘텐츠 제작, 현장 운영 업무를 거치며 기술적 사고를 실제로 작동하는 시스템으로 옮기는 법을 익혔습니다.",
+      eyebrowSkills: "기술", skillsTitle: "다루는 기술과 역량",
+      skillMicro: "마이크로컨트롤러", skillFirmware: "펌웨어 개발", skillDebug: "프로토콜 레벨 디버깅",
+      skillValidation: "시스템 검증", skillAutomation: "프로세스 자동화", skillWorkflow: "워크플로우 설계",
+      skillDocs: "문서화 &amp; 리포팅", skillComms: "이해관계자 커뮤니케이션",
+      skillsNote: "기술 → 검증·프로세스 → 커뮤니케이션 순으로 정리",
+      eyebrowCerts: "자격증", certsTitle: "준비 중인 자격증",
+      certStatus: "준비 중",
+      certSixSigmaIssuer: "프로세스 개선",
+      eyebrowProjects: "프로젝트", projectsTitle: "직접 만든 것들",
+      projectStatus: "완료",
+      projectTitle: "졸업 프로젝트 — 임베디드 통신 브릿지",
+      projectDesc: "웨어러블 관성 센싱을 위한 1-Wire / I2C 통신 브릿지를 설계하고 구현했습니다. 프로토콜 분석부터 펌웨어 개발, 여러 센서 페어에 대한 신호 레벨 검증까지 전 과정을 진행했습니다.",
+      projectResult: "타이밍 분석, ROM ID 처리, I2C 대비 노이즈 비교를 포함해 센서 페어 간 통신 신뢰성을 검증했습니다.",
+      cardEduquest: "AI 기반 교육 프로그램을 위한 기술 학습 콘텐츠 제작 및 워크플로우 자동화.",
+      cardFringeTitle: "에든버러 프린지 페스티벌",
+      cardFringe: "대규모 라이브 이벤트의 무대 전자장비 및 현장 기술 운영.",
+      viewMore: "자세히 보기 →",
+      eyebrowExperience: "경력", experienceTitle: "경력 타임라인",
+      t1date: "2025.08 — 완료", t1role: "졸업 프로젝트 — 임베디드 통신 시스템",
+      t2role: "프로젝트 운영 스태프", t2org: "에든버러 프린지 페스티벌 — Korean Season",
+      t3date: "2024.05 — 06", t3role: "AI R&amp;D 및 마케팅 콘텐츠 개발",
+      t4date: "2021.12 — 2022.12", t4role: "레스토랑 매니저",
+      t5date: "2021.10 — 2023.02", t5role: "영어·수학 과외 교사", t5org: "프리랜서",
+      eyebrowContact: "연락처", contactTitle: "연락처",
+      location: "영국 런던",
+      availability: "2026년 9월부터 근무 가능"
+    }
+  };
+
+  var currentLang = "en";
+
+  function applyLang(lang){
+    var dict = translations[lang];
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
+      var key = el.getAttribute("data-i18n");
+      if(dict[key] !== undefined){ el.innerHTML = dict[key]; }
+    });
+    document.documentElement.lang = lang;
+    document.getElementById("langEnLabel").style.opacity = lang === "en" ? "1" : "0.5";
+    document.getElementById("langKoLabel").style.opacity = lang === "ko" ? "1" : "0.5";
+    currentLang = lang;
+  }
+
+  document.getElementById("langToggle").addEventListener("click", function(){
+    applyLang(currentLang === "en" ? "ko" : "en");
+  });
+
+  applyLang("en");
+
+  /* ---------- project detail modal ---------- */
+  var projectDetails = {
+    main: {
+      status: { en: "Completed", ko: "완료" },
+      title: { en: "Final year project — Embedded communication bridge", ko: "졸업 프로젝트 — 임베디드 통신 브릿지" },
+      image: "images/project-scope.jpg",
+      logo: false,
+      paragraphs: {
+        en: [
+          "Designed and implemented a 1-Wire / I2C communication bridge for wearable inertial sensing, from protocol analysis through firmware development to signal-level validation across multiple sensor pairs.",
+          "The system uses a layered architecture — physical signal handling, protocol timing, device addressing, and data transfer — so each part of the communication path could be tested on its own. Reliability was validated by comparing signal traces across multiple sensor pairs and checking timing consistency, and the bus showed noticeably cleaner signal behaviour than a comparable I2C setup under the same conditions.",
+          "The build combined a NUCLEO-based microcontroller platform, a 1-Wire bridge IC, and an inertial sensor stitched into a fabric prototype, with an oscilloscope used throughout for protocol-level debugging."
+        ],
+        ko: [
+          "웨어러블 관성 센싱을 위한 1-Wire / I2C 통신 브릿지를 설계하고 구현했습니다. 프로토콜 분석부터 펌웨어 개발, 여러 센서 페어에 대한 신호 레벨 검증까지 전 과정을 진행했습니다.",
+          "물리 신호 처리, 프로토콜 타이밍, 디바이스 주소 지정, 데이터 전송으로 나뉘는 계층형 아키텍처를 사용해 통신 경로의 각 부분을 독립적으로 테스트할 수 있도록 설계했습니다. 여러 센서 페어 간 신호를 비교하고 타이밍 일관성을 확인하는 방식으로 신뢰성을 검증했으며, 동일 조건에서 비교한 I2C 대비 눈에 띄게 깨끗한 신호 특성을 보였습니다.",
+          "NUCLEO 기반 마이크로컨트롤러 플랫폼, 1-Wire 브릿지 IC, 패브릭 프로토타입에 부착한 관성 센서로 구성했으며, 전 과정에서 오실로스코프를 활용해 프로토콜 레벨 디버깅을 진행했습니다."
+        ]
+      }
+    },
+    eduquest: {
+      status: { en: "Completed", ko: "완료" },
+      title: { en: "AI R&D — Eduquest", ko: "AI R&D — Eduquest" },
+      image: "images/eduquest-logo.png",
+      logo: true,
+      paragraphs: {
+        en: [
+          "At Eduquest, I worked on AI-assisted technical learning content under tight delivery timelines, producing guide videos and structured materials spanning basic to advanced levels for corporate clients.",
+          "I designed repeatable workflows for producing interactive educational material, automated a manual data-entry process in Excel to improve accuracy, and evaluated new development tools that were projected to meaningfully improve long-term productivity."
+        ],
+        ko: [
+          "Eduquest에서는 빠듯한 일정 속에서 AI 기반 기술 학습 콘텐츠를 제작했습니다. 기업 고객을 위해 입문부터 고급 수준까지 아우르는 가이드 영상과 학습 자료를 만들었습니다.",
+          "반복 가능한 인터랙티브 교육 콘텐츠 제작 워크플로우를 설계했고, 엑셀 기반의 수기 데이터 입력 과정을 자동화해 정확도를 높였으며, 장기적인 생산성 향상이 기대되는 신규 개발 툴을 평가했습니다."
+        ]
+      }
+    },
+    fringe: {
+      status: { en: "Completed", ko: "완료" },
+      title: { en: "Edinburgh Fringe Festival — Korean Season", ko: "에든버러 프린지 페스티벌 — Korean Season" },
+      image: "images/fringe-ari.jpg",
+      logo: false,
+      paragraphs: {
+        en: [
+          "During the Edinburgh Fringe Festival's Korean Season, I managed stage electronics and technical setup for live performances and award events, working to keep downtime to a minimum during fast-paced, time-critical shows.",
+          "Alongside the technical work, I coordinated on-site promotion and printed materials and supported crowd management across high-traffic days, engaging directly with large numbers of attendees."
+        ],
+        ko: [
+          "에든버러 프린지 페스티벌 Korean Season에서 라이브 공연과 시상식의 무대 전자장비 및 기술 셋업을 담당하며, 빠르게 돌아가는 현장에서 다운타임을 최소화하는 데 집중했습니다.",
+          "기술 업무와 함께 현장 홍보와 인쇄물 운영을 조율했고, 방문객이 많은 날에는 현장 통제를 지원하며 다수의 관람객과 직접 소통했습니다."
+        ]
+      }
+    }
+  };
+
+  var modalOverlay = document.getElementById("modalOverlay");
+  var modalMedia = document.getElementById("modalMedia");
+  var modalStatus = document.getElementById("modalStatus");
+  var modalTitle = document.getElementById("modalTitle");
+  var modalText = document.getElementById("modalText");
+  var lastFocused = null;
+
+  function openModal(id){
+    var data = projectDetails[id];
+    if(!data) return;
+    modalMedia.className = "modal-media" + (data.logo ? " logo-media" : "");
+    modalMedia.innerHTML = '<img src="' + data.image + '" alt="">';
+    modalStatus.textContent = data.status[currentLang];
+    modalTitle.textContent = data.title[currentLang];
+    modalText.innerHTML = data.paragraphs[currentLang].map(function(p){ return "<p>" + p + "</p>"; }).join("");
+    lastFocused = document.activeElement;
+    document.body.style.overflow = "hidden";
+    modalOverlay.classList.add("open");
+    document.getElementById("modalClose").focus();
+  }
+
+  function closeModal(){
+    modalOverlay.classList.remove("open");
+    document.body.style.overflow = "";
+    if(lastFocused){ lastFocused.focus(); }
+  }
+
+  document.querySelectorAll("[data-project]").forEach(function(el){
+    el.addEventListener("click", function(){ openModal(el.getAttribute("data-project")); });
+    el.addEventListener("keydown", function(e){
+      if(e.key === "Enter" || e.key === " "){
+        e.preventDefault();
+        openModal(el.getAttribute("data-project"));
+      }
+    });
+  });
+
+  document.getElementById("modalClose").addEventListener("click", closeModal);
+  modalOverlay.addEventListener("click", function(e){
+    if(e.target === modalOverlay){ closeModal(); }
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && modalOverlay.classList.contains("open")){ closeModal(); }
+  });
+
+  /* ---------- flash heading on nav click ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(function(link){
+    link.addEventListener("click", function(){
+      var targetId = link.getAttribute("href").slice(1);
+      var section = document.getElementById(targetId);
+      if(!section) return;
+      var heading = section.querySelector("h1, h2");
+      if(!heading) return;
+      setTimeout(function(){
+        heading.classList.remove("flash-highlight");
+        void heading.offsetWidth;
+        heading.classList.add("flash-highlight");
+      }, 550);
+      heading.addEventListener("animationend", function handler(){
+        heading.classList.remove("flash-highlight");
+        heading.removeEventListener("animationend", handler);
+      });
+    });
+  });
+
+  /* ---------- proximity-reactive text ---------- */
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+
+  document.querySelectorAll(".hero-title, .section-title").forEach(function(el){
+    el.classList.add("magnetic");
+  });
+
+  if(!reduceMotion && !coarsePointer){
+    var magneticEls = Array.prototype.slice.call(document.querySelectorAll(".magnetic"));
+    var RADIUS = 150;
+    var mx = -9999, my = -9999;
+    var magTicking = false;
+
+    function applyMagnetic(){
+      magneticEls.forEach(function(el){
+        var r = el.getBoundingClientRect();
+        var cx = Math.max(r.left, Math.min(mx, r.right));
+        var cy = Math.max(r.top, Math.min(my, r.bottom));
+        var dx = mx - cx, dy = my - cy;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        var p = dist < RADIUS ? 1 - dist / RADIUS : 0;
+
+        var r1 = 46 + (79 - 46) * p, g1 = 42 + (91 - 42) * p, b1 = 36 + (68 - 36) * p;
+        el.style.color = "rgb(" + Math.round(r1) + "," + Math.round(g1) + "," + Math.round(b1) + ")";
+      });
+      magTicking = false;
+    }
+
+    window.addEventListener("mousemove", function(e){
+      mx = e.clientX;
+      my = e.clientY;
+      if(!magTicking){
+        magTicking = true;
+        requestAnimationFrame(applyMagnetic);
+      }
+    });
+    document.addEventListener("mouseleave", function(){
+      mx = -9999; my = -9999;
+      requestAnimationFrame(applyMagnetic);
+    });
+  }
+
+</script>
+
+</body>
+</html>
+
   :root{
     --bg:#f3ede2;
     --surface:#faf6ee;
